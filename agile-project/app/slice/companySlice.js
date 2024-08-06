@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@redux.js/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../axios';
 
 export const fetchCompanies = createAsyncThunk('companies/fetchCompanies', async () => {

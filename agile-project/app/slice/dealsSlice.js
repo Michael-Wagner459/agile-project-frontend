@@ -21,6 +21,11 @@ export const updateDeals = createAsyncThunk('deals/updateDeals', async ({ id, up
   return response.data;
 });
 
+export const updateDealStage = createAsyncThunk('deals/updateDealStage', async ({ id, stage }) => {
+  const response = await axios.put(`/api/deals/${id}/stage`, { stage });
+  return response.data;
+});
+
 export const deleteDeal = createAsyncThunk('deals/deleteDeal', async (id) => {
   await axios.delete(`/api/deals/${id}`);
   return id;
@@ -86,6 +91,22 @@ const dealSlice = createSlice({
         }
       })
       .addCase(updateDeals.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      //update deal stage
+      .addCase(updateDealStage.pending, (state) => {
+        state.status = 'succeeded';
+      })
+      .addCase(updateDealStage.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        const updatedStage = action.payload;
+        const existingDeal = state.deals.find((deal) => deal._id === updatedStage._id);
+        if (existingDeal) {
+          Object.assign(existingDeal, updatedStage);
+        }
+      })
+      .addCase(updateDealStage.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       })
