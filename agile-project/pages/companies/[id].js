@@ -28,7 +28,7 @@ const CompanyDetails = () => {
       };
       fetchCompanyDetails();
     }
-  }, [id, deals]);
+  }, []);
 
   const formatPhoneNumber = (phoneNumber) => {
     if (!phoneNumber) return '';
