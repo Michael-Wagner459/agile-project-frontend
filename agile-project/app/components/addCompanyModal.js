@@ -66,7 +66,7 @@ const AddCompanyModal = ({ isOpen, onClose }) => {
         <button onClick={onClose} className="float-right">
           ✖
         </button>
-        <h2 className="text-xl font-bold mb-4">Update Company</h2>
+        <h2 className="text-xl font-bold mb-4">Add Company</h2>
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="mb-4">
             <label className="block mb-1">Name</label>
