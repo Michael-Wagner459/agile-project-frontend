@@ -12,7 +12,7 @@ const DealsPage = () => {
 
   useEffect(() => {
     dispatch(fetchDeals());
-  }, [deals]);
+  }, []);
 
   const onDragEnd = (result) => {
     if (!result.destination) return;
@@ -26,6 +26,7 @@ const DealsPage = () => {
           stage: destination.droppableId,
         })
       );
+      dispatch(fetchDeals());
     }
   };
 
