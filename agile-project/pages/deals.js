@@ -26,7 +26,6 @@ const DealsPage = () => {
           stage: destination.droppableId,
         })
       );
-      dispatch(fetchDeals());
     }
   };
 
