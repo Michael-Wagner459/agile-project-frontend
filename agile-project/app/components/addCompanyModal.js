@@ -20,6 +20,21 @@ const AddCompanyModal = ({ isOpen, onClose }) => {
 
   const [errors, setErrors] = useState({});
 
+  const resetState = () => {
+    setFormData({
+      logo: '',
+      name: '',
+      phoneNumber: '',
+      address: '',
+      email: '',
+      companyOwner: '',
+      city: '',
+      country: '',
+      industry: '',
+    });
+    setErrors({});
+  };
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -32,6 +47,7 @@ const AddCompanyModal = ({ isOpen, onClose }) => {
     const phoneNumberPattern = /^[0-9]{10}$/;
 
     if (!formData.name) newErrors.name = 'Name is required';
+    if (!formData.logo) newErrors.logo = 'Logo is required';
     if (!formData.phoneNumber) newErrors.phoneNumber = 'Phone number is required';
     else if (!phoneNumberPattern.test(formData.phoneNumber))
       newErrors.phoneNumber = 'Phone number must be exactly 10 Numbers';
@@ -47,6 +63,7 @@ const AddCompanyModal = ({ isOpen, onClose }) => {
       try {
         dispatch(createCompany(formData));
         onClose();
+        resetState();
       } catch (error) {
         console.error('Error updating company', error);
       }
@@ -88,7 +105,9 @@ const AddCompanyModal = ({ isOpen, onClose }) => {
               className="w-full px-3 py-2 border rounded"
               value={formData.logo}
               onChange={handleChange}
+              required
             />
+            {errors.logo && <p className="text-red-500">{errors.logo}</p>}
           </div>
           <div className="mb-4">
             <label className="block mb-1">Phone Number</label>
@@ -175,7 +194,7 @@ const AddCompanyModal = ({ isOpen, onClose }) => {
             {errors.industry && <p className="text-red-500">{errors.industry}</p>}
           </div>
           <button onClick={handleUpdateCompany} className="w-full py-2 bg-blue-500 text-white rounded">
-            Update Company
+            Add Company
           </button>
         </form>
       </div>
