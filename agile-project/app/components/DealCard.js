@@ -3,9 +3,8 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteDeal } from '../slice/dealsSlice';
 
-const DealCard = ({ deal, innerRef, draggableProps, dragHandleProps }) => {
+const DealCard = React.memo(({ deal, innerRef, draggableProps, dragHandleProps }) => {
   const dispatch = useDispatch();
-  const [isUpdateDealModalOpen, setIsUpdateDealModalOpen] = useState(false);
 
   const handleDelete = () => {
     if (window.confirm('Are you sure you want to delete this company and all associated deals?')) {
@@ -45,6 +44,6 @@ const DealCard = ({ deal, innerRef, draggableProps, dragHandleProps }) => {
       </button>
     </div>
   );
-};
+});
 
 export default DealCard;
