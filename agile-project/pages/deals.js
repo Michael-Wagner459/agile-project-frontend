@@ -8,12 +8,12 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 const DealsPage = () => {
   const dispatch = useDispatch();
   const deals = useSelector((state) => state.deals.deals);
-  const [localDeals, setLocalDeals] = useState([]);
+  const [localDeals, setLocalDeals] = useState(deals);
   const [isAddDealModalOpen, setAddDealModalOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchDeals());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     setLocalDeals(deals);
@@ -39,7 +39,7 @@ const DealsPage = () => {
         );
       }
     },
-    [dispatch, localDeals]
+    [localDeals]
   );
 
   const stages = useMemo(() => ['Initiated', 'Qualified', 'Contract Sent', 'Closed Won', 'Closed Lost'], []);
@@ -57,7 +57,7 @@ const DealsPage = () => {
               {(provided) => (
                 <div ref={provided.innerRef} {...provided.droppableProps} className="bg-gray-100 p-4 rounded shadow">
                   <h2 className="font-bold mb-2 capitalize">{stage}</h2>
-                  {deals
+                  {localDeals
                     .filter((deal) => deal.stage === stage)
                     .map((deal, index) => (
                       <Draggable key={deal._id} draggableId={deal._id} index={index}>
