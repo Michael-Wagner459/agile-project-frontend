@@ -27,9 +27,6 @@ const DealCard = React.memo(({ deal, innerRef, draggableProps, dragHandleProps }
           <strong>Company:</strong> {deal.company.name}
         </p>
         <p>
-          <strong>Stage:</strong> {deal.stage}
-        </p>
-        <p>
           <strong>Amount:</strong> {deal.amount}
         </p>
         <p>

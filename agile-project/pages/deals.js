@@ -8,11 +8,16 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 const DealsPage = () => {
   const dispatch = useDispatch();
   const deals = useSelector((state) => state.deals.deals);
+  const [localDeals, setLocalDeals] = useState([]);
   const [isAddDealModalOpen, setAddDealModalOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchDeals());
   }, [dispatch]);
+
+  useEffect(() => {
+    setLocalDeals(deals);
+  }, [deals]);
 
   const onDragEnd = useCallback(
     (result) => {
@@ -21,6 +26,11 @@ const DealsPage = () => {
       const { source, destination } = result;
 
       if (source.droppableId !== destination.droppableId) {
+        const updatedDeals = localDeals.map((deal) =>
+          deal._id === result.draggableId ? { ...deal, stage: destination.droppableId } : deal
+        );
+        setLocalDeals(updatedDeals);
+
         dispatch(
           updateDealStage({
             id: result.draggableId,
@@ -29,7 +39,7 @@ const DealsPage = () => {
         );
       }
     },
-    [dispatch]
+    [dispatch, localDeals]
   );
 
   const stages = useMemo(() => ['Initiated', 'Qualified', 'Contract Sent', 'Closed Won', 'Closed Lost'], []);
